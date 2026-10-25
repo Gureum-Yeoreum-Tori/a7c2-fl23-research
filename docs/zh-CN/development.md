@@ -100,7 +100,7 @@
 
 ## 构建与测试
 
-使用原生 64 位 Python 3.11：
+使用原生 64 位 Python 3.11。Apple Silicon 构建 Unicorn 2.1.3 前需安装 `pkgconf`（提供 `pkg-config`），并确认 `pkg-config --version` 可运行。缺少该工具会中止 QEMU 配置，后续可能出现 Int128 或 POSIX 定义缺失的编译错误。CMake 按 CI 固定为 3.31.6。
 
 ```text
 python -m pip install --no-build-isolation -r desktop-requirements.txt pyinstaller==6.16.0 pytest==8.3.5

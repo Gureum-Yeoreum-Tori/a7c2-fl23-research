@@ -130,3 +130,14 @@ def test_dmg_has_fresh_staging_and_arch_specific_filename(tmp_path):
     assert result.name=='A7C2Tools-macOS-arm64.dmg'
     assert not list(tmp_path.glob('a7c2-dmg-*'))
     assert run.call_args.args[0]==['hdiutil','verify',str(result)]
+
+
+def test_optional_legacy_preset_license_survives_export_and_import(tmp_path):
+    before=tmp_path/'before';folder=before/'desktop-assets/presets/default-six-v1'
+    folder.mkdir(parents=True)
+    for name in assets.PRESET_NAMES:(folder/name).write_bytes(name.encode())
+    legacy=folder/'CC-BY-NC-SA-4.0.txt';legacy.write_bytes(b'Original legacy notice')
+    library_fixture(before)
+    archive=assets.export_presets(tmp_path/'presets.zip',before)
+    after=assets.import_presets(archive,tmp_path/'after')
+    assert (after/legacy.name).read_bytes()==legacy.read_bytes()

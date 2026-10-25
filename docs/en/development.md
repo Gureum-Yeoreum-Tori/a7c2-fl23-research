@@ -100,7 +100,7 @@ If `0336` never appears and the camera returns to `0E8A`, the session cools down
 
 ## Build and test
 
-Use native 64-bit Python 3.11.
+Use native 64-bit Python 3.11. On Apple Silicon, install `pkgconf` (provides `pkg-config`) and confirm `pkg-config --version` before building Unicorn 2.1.3. Its QEMU configuration stops if this tool is missing; the downstream compile errors can include missing Int128 or POSIX definitions. Keep CMake pinned to 3.31.6 as in CI.
 
 ```text
 python -m pip install --no-build-isolation -r desktop-requirements.txt pyinstaller==6.16.0 pytest==8.3.5
