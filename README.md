@@ -1,502 +1,444 @@
 # A7C II Tools 3.0
 
-**English** · [简体中文](README.zh-CN.md) · [한국어](README.ko.md)
+[English](README.en.md) · [简体中文](README.zh-CN.md) · **한국어**
 
 > [!WARNING]
+> ### 사용 전 확인 · 면책 고지
 >
-> ### Read before use · Disclaimer
+> **이 도구는 학습과 기술 토론을 위한 비공식 독립 연구 도구입니다. Sony와 제휴 관계가 없으며 Sony의 승인이나 보증을 받지 않았습니다.**
 >
-> **This is an unofficial, independent research tool for learning and technical discussion. It is not affiliated with, authorized or endorsed by Sony.**
+> ### 상업적 이용 및 수익 창출 금지
 >
-> ### No commercial use or profit-making
+> **모든 상업적 이용과 수익 창출을 금지합니다.**
 >
-> **All commercial use and profit-making are prohibited.**
+> ### Sony 사칭 및 저자의 승인 주장 금지
 >
-> ### Do not impersonate Sony or claim author authorization
+> **저자는 누구에게도 저자나 Sony의 공식 명의로 유료 서비스를 제공하거나, 광고하거나, 보증을 약속할 권한을 부여한 적이 없습니다. Sony, 저자 또는 공인 서비스 제공자를 사칭해서는 안 됩니다. 제삼자가 요금을 받더라도 저자의 관여·승인·추천·보증을 의미하지 않습니다.**
 >
-> **The author has never authorized anyone to offer paid services, advertise or promise warranty coverage in the author's or Sony's official name. Do not impersonate Sony, the author or an authorized service provider. Third-party fees imply no author involvement, approval, endorsement or guarantee.**
+> ### 사용자가 위험을 부담합니다 · 복구는 보장되지 않습니다
 >
-> ### Use at your own risk · Recovery is not guaranteed
+> **수정으로 부팅 실패, 반복 재시작, 오작동, 데이터 손실이 발생할 수 있으며 공식 업데이트, 보증 또는 수리에 영향을 줄 수 있습니다. 쓰기 성공과 읽기 검증 일치만으로 부팅 안전성이 입증되지는 않으며, 복원으로 카메라가 복구된다는 보장도 없습니다.**
 >
-> **Modifications can cause boot failure, repeated restarts, malfunctions or data loss, and can affect official updates, warranty or repair. Successful writes and matching readback do not establish boot safety; restoration is not guaranteed to recover the camera.**
+> **합법적으로 소유하거나 소유자에게 명시적으로 허가받은 기기에서만 사용하십시오. 중요한 데이터를 백업하십시오. 기기 손상과 수리 비용을 감수할 수 없다면 진행하지 마십시오.**
 >
-> **Only operate a device you lawfully own or for which the owner has given explicit permission. Back up important data. Do not proceed if you cannot accept device damage and repair costs.**
+> **이 배포본의 프로젝트 자체 코드는 [PolyForm Noncommercial License 1.0.0](LICENSE)을 따릅니다. 적용 범위와 제삼자 권리는 [출처와 라이선스](docs/en/notices.md)를 확인하십시오. 법적으로 배제할 수 없는 책임은 이 고지로 배제되지 않습니다.**
 >
-> **Original project code in this distribution uses [PolyForm Noncommercial License 1.0.0](LICENSE). See [Sources and licenses](docs/en/notices.md) for scope and third-party rights. This statement does not exclude liability that cannot lawfully be excluded.**
->
-> **[Read the full risk notice and use statement](docs/en/notices.md#risk-notice-and-use-statement)**
+> **[전체 위험 고지 및 사용 조건 보기 · 영어](docs/en/notices.md#risk-notice-and-use-statement)**
 
-A desktop tool for the **Sony A7C II (ILCE-7CM2) on firmware 2.01**. It adds FL2/FL3, custom Creative Looks, electronic shutter sound and Vertical Display, and can restore factory functions in one click.
+**펌웨어 2.01을 사용하는 Sony A7C II(ILCE-7CM2)**용 데스크톱 도구입니다. FL2/FL3, 사용자 지정 크리에이티브 룩, 전자 셔터음, 세로 표시를 추가하고, 원래 기능으로 복원할 수 있습니다.
 
-**3.0 is the first release with a proper graphical interface.** Driver setup, installation, cold reload and verification all happen with buttons in one window; no command line needed.
+**3.0은 본격적인 그래픽 인터페이스를 제공하는 첫 버전입니다.** 드라이버 준비, 설치, 완전 전원 재시작 안내, 검증을 하나의 창에서 진행합니다.
 
-## Supported cameras
+## 지원 카메라
 
 > [!IMPORTANT]
-> **This tool supports only the Sony A7C II (ILCE-7CM2) on firmware 2.01.** It does **not** work on any other model, including the original A7C, the A7 IV, A7CR, A7R V, A6700 and A7 V. The app refuses to connect to them; please don't try.
+> **지원 대상은 펌웨어 2.01의 Sony A7C II(ILCE-7CM2)뿐입니다.** A7C, A7 IV, A7CR, A7R V, A6700, A7 V 등 다른 모델은 지원하지 않으며 앱이 연결을 거부합니다.
 
-For other models, these independent projects may help. They are not part of this project; check each one for its own scope and risks:
+다른 모델은 아래 독립 프로젝트의 지원 범위와 위험을 확인하십시오. 각 프로젝트는 이 프로젝트와 별개입니다.
 
-| Camera | Project | What it is |
+| 카메라 | 프로젝트 | 내용 |
 | --- | --- | --- |
-| A7CR | [lzh2016zzz/a7cr-fl23-research](https://github.com/lzh2016zzz/a7cr-fl23-research) | FL2/FL3 porting research |
-| A7CR | [injectiver/a7cr-creative-look-tools](https://github.com/injectiver/a7cr-creative-look-tools) | Research tools for FL2/FL3 and custom looks on firmware 2.01 (source only, no flashing command) |
-| A7R V | [Hearts-Ace/sony-a7r5-custom-firmware](https://github.com/Hearts-Ace/sony-a7r5-custom-firmware) | FL2/FL3 firmware adaptation and RAW color research |
-| A7 IV | [DavidBuchanan314/ILCE-7M4-RE](https://github.com/DavidBuchanan314/ILCE-7M4-RE) | Firmware reverse-engineering notes |
-| A6700 | [xyzhangxin/sony-a6700-powerful](https://github.com/xyzhangxin/sony-a6700-powerful) | Chinese guide for firmware 2.00: Pico wiring, Fastboot, backups and feature unlocks |
-| A7 V | No in-camera firmware project yet | [751K/sony-a7m5-looks](https://github.com/751K/sony-a7m5-looks) ports the A7 V Creative Looks to Lightroom/Capture One profiles (computer only; the camera is not modified) |
+| A7CR | [lzh2016zzz/a7cr-fl23-research](https://github.com/lzh2016zzz/a7cr-fl23-research) | FL2/FL3 이식 연구 |
+| A7CR | [injectiver/a7cr-creative-look-tools](https://github.com/injectiver/a7cr-creative-look-tools) | 펌웨어 2.01의 FL2/FL3 및 사용자 룩 연구 도구. 소스만 제공하며 플래시 기록 명령은 없음 |
+| A7R V | [Hearts-Ace/sony-a7r5-custom-firmware](https://github.com/Hearts-Ace/sony-a7r5-custom-firmware) | FL2/FL3 펌웨어 이식 및 RAW 색상 연구 |
+| A7 IV | [DavidBuchanan314/ILCE-7M4-RE](https://github.com/DavidBuchanan314/ILCE-7M4-RE) | 펌웨어 역공학 기록 |
+| A6700 | [xyzhangxin/sony-a6700-powerful](https://github.com/xyzhangxin/sony-a6700-powerful) | 펌웨어 2.00의 Pico 배선, Fastboot, 백업, 기능 활성화 중국어 안내 |
+| A7 V | 카메라 내부 펌웨어 프로젝트는 아직 없음 | [751K/sony-a7m5-looks](https://github.com/751K/sony-a7m5-looks)는 A7 V 룩을 Lightroom/Capture One 프로파일로 이식. 컴퓨터에서 사용하며 카메라 수정 없음 |
 
-**Community:** [Telegram (recommended)](https://t.me/sonyfwlab) · [Discord](https://discord.gg/SwPdfSd9c)
-**Author:** Xiaohongshu [QAQLeonard（读研版）](https://www.xiaohongshu.com/user/profile/660501f7000000000600d03c) · Douyin **LeonardZ** (ID `90860261487`)
+**커뮤니티:** [Telegram · 권장](https://t.me/sonyfwlab) · [Discord](https://discord.gg/SwPdfSd9c)
+
+**저자:** Xiaohongshu [QAQLeonard（读研版）](https://www.xiaohongshu.com/user/profile/660501f7000000000600d03c) · Douyin **LeonardZ** (ID `90860261487`)
 
 > [!IMPORTANT]
-> This tool modifies programs and settings in the camera firmware. Read the whole [step-by-step guide](#step-by-step-guide) before you start. If the app reports an error, **export a diagnostic bundle first. Do not keep retrying the write.**
+> 이 도구는 카메라 펌웨어의 프로그램과 설정을 수정합니다. 시작 전에 [단계별 안내](#단계별-안내)를 모두 읽으십시오. 오류가 발생하면 **먼저 진단 묶음을 내보내십시오. 쓰기를 반복해서 재시도하지 마십시오.**
 
-The interface is in Simplified Chinese. Button names below are given in Chinese with an English translation, so you can match them on screen.
+**데스크톱 앱의 인터페이스는 중국어 간체입니다.** 아래에서는 실제 버튼명과 한국어 뜻을 함께 표기합니다. 이 문서의 한글화는 앱이나 카메라의 표시 언어를 변경하지 않습니다. 카메라 메뉴를 영어로 전환하는 기능은 확인되지 않았으며, 실제 메뉴 언어는 카메라에서 확인하십시오.
 
-## Contents
+## 목차
 
-- [Supported cameras](#supported-cameras)
-- [What it does](#what-it-does)
-- [Download and requirements](#download-and-requirements)
-- [Before you start](#before-you-start)
-- [Step-by-step guide](#step-by-step-guide)
-  - [Step 1: Install the drivers (Windows)](#step-1-install-the-drivers-windows)
-  - [Driver errors: uninstall, then reinstall](#driver-errors-uninstall-then-reinstall)
-  - [Still failing: install with Zadig](#still-failing-install-with-zadig)
-  - [Step 2: Installed an earlier version? Restore factory functions first](#step-2-installed-an-earlier-version-restore-factory-functions-first)
-  - [Step 3: One-click install](#step-3-one-click-install)
-  - [Step 4: Check on the camera](#step-4-check-on-the-camera)
-- [Using each feature on its own](#using-each-feature-on-its-own)
-- [Troubleshooting](#troubleshooting)
-- [Verification status](#verification-status)
-- [Command line and development](#command-line-and-development)
-- [Older releases](#older-releases)
-- [Credits and licenses](#credits-and-licenses)
-- [Film look comparisons](#film-look-comparisons)
-- [Acknowledgements](#acknowledgements)
-- [Sponsor](#sponsor)
+- [지원 카메라](#지원-카메라)
+- [주요 기능](#주요-기능)
+- [다운로드 및 요구 사항](#다운로드-및-요구-사항)
+- [시작 전 준비](#시작-전-준비)
+- [단계별 안내](#단계별-안내)
+- [기능별 사용법](#기능별-사용법)
+- [문제 해결](#문제-해결)
+- [검증 현황](#검증-현황)
+- [명령줄 및 개발](#명령줄-및-개발)
+- [이전 버전](#이전-버전)
+- [저작권 및 라이선스](#저작권-및-라이선스)
+- [필름 룩 비교](#필름-룩-비교)
+- [감사의 말](#감사의-말)
+- [후원](#후원)
 
-## What it does
+## 주요 기능
 
-| Feature | Description |
+| 기능 | 설명 |
 | --- | --- |
-| **One-click install** | Installs the six built-in looks, FL2/FL3, electronic shutter sound and Vertical Display in one pass. The Lightroom plugin is optional. |
-| **FL2 / FL3** | Adds FL2 and FL3 to the Creative Look list. You can remove them again at any time. |
-| **Custom Creative Looks** | Writes `.a7look` files into custom slots 1–6 with your own names, or resets slots to ST. Slots you don't list stay unchanged. |
-| **Look conversion** | Converts DCP or CUBE files to `.a7look` offline, without Lightroom. Ships with 15 paired DCP/A7Look profiles. |
-| **Lightroom plugin** | When you import RAW files, applies the DCP that matches the custom slot used for each shot. |
-| **Electronic shutter sound** | Turns on Sony's native electronic shutter sound, or uses a clip from any audio/video file as a custom sound. |
-| **Vertical Display** | Rotates shooting information and icons when the camera is held vertically. The full MENU does not rotate. |
-| **Restore factory functions** | Removes every change this project makes and restores stock 2.01 behavior. **No old backup needed**; body calibration is kept. |
+| **한 번에 설치** | 기본 룩 6개, FL2/FL3, 전자 셔터음, 세로 표시를 함께 설치. Lightroom 플러그인은 선택 사항 |
+| **FL2 / FL3** | 크리에이티브 룩 목록에 FL2/FL3 추가. 필요하면 목록에서 제거 가능 |
+| **사용자 지정 크리에이티브 룩** | 사용자 슬롯 1–6에 `.a7look` 파일과 이름 기록 또는 ST로 초기화. 선택하지 않은 슬롯 유지 |
+| **룩 변환** | Lightroom 없이 DCP/CUBE를 `.a7look`으로 오프라인 변환. DCP/A7Look 프로파일 15쌍 제공 |
+| **Lightroom 플러그인** | RAW를 가져올 때 촬영에 사용한 사용자 슬롯에 맞는 DCP 적용 |
+| **전자 셔터음** | Sony 기본 전자 셔터음 활성화 또는 오디오·비디오 파일의 일부를 사용자 셔터음으로 사용 |
+| **세로 표시** | 카메라를 세로로 들면 촬영 정보와 아이콘 회전. 전체 MENU는 회전하지 않음 |
+| **원래 기능 복원** | 프로젝트의 변경 사항을 제거하고 순정 2.01 동작 복원. **과거 백업 불필요**, 바디 보정값 유지 |
 
-## Download and requirements
+## 다운로드 및 요구 사항
 
-| System | Download | Notes |
+| 운영체제 | 다운로드 | 안내 |
 | --- | --- | --- |
-| **Windows 10/11 x64** | `A7C2Tools-Windows-x64.zip` from [Releases](https://github.com/QAQLeonard/a7c2-fl23-research/releases) | Extract the whole archive and run `A7C2Tools.exe`. Keep the `_internal` and `Profiles` folders next to it; don't copy the EXE out on its own. No Python install needed. |
-| **macOS 14+ (Apple Silicon)** | `A7C2Tools-macOS-arm64.dmg` from [Releases](https://github.com/QAQLeonard/a7c2-fl23-research/releases) | Drag the app into Applications. It isn't signed by a developer, so allow it once under System Settings → Privacy & Security. No Intel build. **USB on a real Mac has not been verified yet.** |
+| **Windows 10/11 x64** | [Releases](https://github.com/QAQLeonard/a7c2-fl23-research/releases)의 `A7C2Tools-Windows-x64.zip` | 전체 압축을 풀고 `A7C2Tools.exe` 실행. `_internal`, `Profiles` 폴더를 EXE 옆에 유지. EXE만 따로 옮기지 말 것. Python 설치 불필요 |
+| **macOS 14+ · Apple Silicon** | [Releases](https://github.com/QAQLeonard/a7c2-fl23-research/releases)의 `A7C2Tools-macOS-arm64.dmg` | 응용 프로그램 폴더에 복사. 개발자 서명이 없어 시스템 설정 → 개인정보 보호 및 보안에서 최초 실행 허용 필요. Intel 빌드 없음. **실제 Mac의 USB 동작은 아직 미검증** |
 
-Both packages include **15 paired DCP and `.a7look` files** (11 Fujifilm, 4 Ricoh color). The two files for each look share the same name and sit side by side:
-- **Windows:** in the `Profiles` folder next to the EXE.
-- **macOS:** inside the app. Open them with **打开内置 DCP／A7Look 配对库 (Open paired DCP/A7Look library)** on the Custom Creative Looks page.
+두 패키지 모두 **DCP와 `.a7look` 15쌍**(Fujifilm 11쌍, Ricoh 컬러 4쌍)을 포함합니다. 같은 룩의 두 파일은 이름이 같고 함께 보관됩니다.
 
-The `.a7look` goes into the camera; the matching `.dcp` is for RAW development in Lightroom.
+- **Windows:** EXE 옆의 `Profiles` 폴더.
+- **macOS:** 앱 내부. 사용자 룩 페이지의 **打开内置 DCP／A7Look 配对库(내장 DCP/A7Look 라이브러리 열기)**로 접근.
 
-Camera: **ILCE-7CM2 on firmware 2.01**. No other model or firmware version is supported.
+`.a7look`은 카메라에 기록하고, 짝이 되는 `.dcp`는 Lightroom RAW 현상에 사용합니다. 지원 카메라는 **펌웨어 2.01의 ILCE-7CM2**입니다.
 
-## Before you start
+## 시작 전 준비
 
-- **Battery:** at least 50%. The app asks you to confirm power before every write.
-- **Cable:** use a USB cable that carries data, plugged straight into the computer (avoid docks and hubs). Connect one camera at a time.
-- **USB mode:** set the camera's USB connection to **Mass Storage**.
-- **Expected message:** while connecting or switching drivers, the camera may show **"Please check the connected device"** and the computer may not show a drive letter. Both are normal. Judge success by the app's progress and log, not by that message; don't unplug the cable or reinstall drivers because of it.
-- **During a write:** while the app shows a task running, don't unplug the cable, power off the camera or close the app. Act only after the app says reading and writing have ended.
-- **Opening the app** never connects to or writes the camera by itself.
+- **배터리:** 50% 이상. 쓰기 전에 앱에서 전원 상태를 확인합니다.
+- **케이블:** 데이터 전송이 가능한 USB 케이블로 컴퓨터에 직접 연결하십시오. 도크와 허브는 피하고 카메라는 한 번에 한 대만 연결하십시오.
+- **USB 모드:** 카메라의 USB 연결을 **대용량 저장 장치(Mass Storage)**로 설정하십시오.
+- **연결 중 표시:** 연결 또는 드라이버 전환 중 카메라에 **“연결된 기기를 확인하십시오”(Please check the connected device)**가 표시되거나 컴퓨터에 드라이브가 나타나지 않을 수 있습니다. 정상적인 현상이므로 앱의 진행 상태와 로그를 따르십시오. 이 메시지만 보고 케이블을 빼거나 드라이버를 재설치하지 마십시오.
+- **쓰기 중:** 작업이 실행되는 동안 USB 분리, 전원 끄기, 앱 종료를 하지 마십시오. 읽기와 쓰기가 끝났다는 안내 후에 조작하십시오.
+- **앱 실행:** 앱을 여는 동작만으로 카메라에 연결하거나 기록하지 않습니다.
 
 > [!NOTE]
-> **Cold reload** is the key step of every workflow; you'll do it after every write. The app shows a dialog each time:
+> **완전 전원 재시작(cold reload)**은 매번 쓰기를 마친 뒤 수행하는 핵심 단계입니다. 앱에 다음 절차가 표시됩니다.
 >
-> 1. Unplug USB and any other external power.
-> 2. Wait for the access light to stop blinking.
-> 3. Switch the camera OFF and wait for the screen and access light to go dark.
-> 4. Remove the battery and wait **at least one minute**.
-> 5. Put the battery back and switch the camera on.
+> 1. USB와 모든 외부 전원을 분리합니다.
+> 2. 액세스 램프의 점멸이 멈출 때까지 기다립니다.
+> 3. 카메라를 끄고 화면과 액세스 램프가 모두 꺼질 때까지 기다립니다.
+> 4. 배터리를 분리하고 **최소 1분** 기다립니다.
+> 5. 배터리를 다시 넣고 카메라를 켭니다.
 >
-> Switching off and on again is not enough. Newly written programs only load after a cold reload.
+> 전원 스위치만 껐다 켜는 것으로는 충분하지 않습니다. 새로 기록한 프로그램은 완전 전원 재시작 후 로드됩니다.
 
-## Step-by-step guide
+## 단계별 안내
 
-Follow these four steps in order.
+다음 순서로 진행하십시오.
 
 ```text
-Step 1  Install drivers (Windows) ──error──→ uninstall drivers → replug → install again
-   │      └─ recommended: USB stability check (read-only); change cable/port if it fails
-   │
-Step 2  Ever used any version of this project? ──yes──→ restore factory functions → cold reload → verify
-   │no
-Step 3  One-click install → cold reload → reconnect USB → continue → installation complete
-   │
-Step 4  Check looks, FL2/FL3, shutter sound and Vertical Display on the camera
+1. Windows 드라이버 설치 → 권장: 읽기 전용 USB 안정성 검사
+2. 이전 버전 사용 이력이 있으면 원래 기능 복원 → 완전 전원 재시작 → 검증
+3. 한 번에 설치 → 완전 전원 재시작 → USB 재연결 → 설치 계속
+4. 카메라에서 룩, FL2/FL3, 셔터음, 세로 표시 확인
 ```
 
-### Step 1: Install the drivers (Windows)
+### 1단계: 드라이버 설치 · Windows
 
-The app talks to the camera through two USB identities: normal Mass Storage `054C:0E8A`, and the authenticated service connection `054C:0336`. Both need a WinUSB driver.
+앱은 일반 대용량 저장 장치 `054C:0E8A`와 인증된 서비스 연결 `054C:0336`, 두 USB 식별자를 사용합니다. 두 식별자 모두 WinUSB 드라이버가 필요합니다.
 
-1. Turn on the camera, choose Mass Storage and connect it to the computer.
-2. Open **连接与驱动 (Connection & drivers)** in the left sidebar.
-3. Click **检测相机与驱动 (Detect camera & drivers)**. The log should show `054C:0E8A`. If it doesn't, check the cable and the USB mode.
-4. Click **准备两阶段驱动并测试连接 (Prepare two-stage drivers & test connection)**:
-   - The app first installs the driver for `0E8A`, then switches the camera to its service connection and installs the driver for `0336` once it appears.
-   - Windows may ask for administrator permission **once or twice**. Click Yes.
-   - An identity that already has a usable driver (WinUSB, libusbK or libusb0) is kept as it is.
-   - The camera may show "Please check the connected device" during this step. That's expected.
-5. You're done when the log says **"服务连接成功，驱动准备结束" (service connection succeeded; driver setup finished)**. This step **does not write the camera firmware**.
-6. **Recommended:** before your first write, click **检测 USB 连接稳定性（只读）(Check USB stability, read-only)** to test the cable and port.
-   - The check runs for **at least 2 minutes**. It repeatedly reads the camera's two program files (the same files a write reads back in full) and compares every round with the first, byte for byte.
-   - Any read error, any mismatch, or any single read taking longer than 20 seconds fails the check.
-   - It only reads and never writes to the camera.
-   - If the connection drops during a write or readback, the result can become "unknown", which is hard to recover from. Confirm the connection is stable before you write.
-   - If the check fails, try another cable or a USB port on the back of the computer until it passes.
-   - Passing doesn't guarantee the connection will never drop during a write. Keep the cable and power steady while writing.
+1. 카메라를 켜고 대용량 저장 장치를 선택한 뒤 컴퓨터에 연결합니다.
+2. 왼쪽의 **连接与驱动(연결 및 드라이버)**를 엽니다.
+3. **检测相机与驱动(카메라 및 드라이버 검색)**를 누릅니다. 로그에 `054C:0E8A`가 표시되어야 합니다. 표시되지 않으면 케이블과 USB 모드를 확인하십시오.
+4. **准备两阶段驱动并测试连接(두 단계 드라이버 준비 및 연결 시험)**를 누릅니다. 앱이 `0E8A` 드라이버를 설치한 뒤 서비스 연결로 전환하고 `0336` 드라이버를 설치합니다. Windows의 관리자 권한 요청이 한두 번 나타나면 허용하십시오. 기존 WinUSB/libusbK/libusb0 드라이버가 사용 가능하면 그대로 유지합니다. 카메라의 연결 기기 확인 메시지는 정상입니다.
+5. 로그에 **服务连接成功，驱动准备结束(서비스 연결 성공, 드라이버 준비 완료)**가 표시되면 완료입니다. 이 단계에서는 카메라 펌웨어에 기록하지 않습니다.
+6. **권장:** 최초 쓰기 전에 **检测 USB 连接稳定性（只读）(USB 연결 안정성 검사 · 읽기 전용)**를 실행합니다. **최소 2분** 동안 프로그램 파일 두 개를 반복해서 읽고 최초 데이터와 바이트 단위로 비교합니다. 읽기 오류, 데이터 불일치, 한 번의 읽기가 20초를 초과하는 경우 실패로 판정합니다. 실패하면 케이블이나 컴퓨터 후면 포트를 바꾸고 다시 검사하십시오. 통과해도 쓰기 중 단절 가능성은 남으므로 케이블과 전원을 안정적으로 유지하십시오. 쓰기 또는 읽기 검증 중 연결이 끊기면 결과가 불명 상태가 되어 복구가 어려울 수 있습니다.
 
-> [!TIP]
-> One-click install also checks and prepares the drivers at the start. Doing this step separately first means any driver problem shows up before anything is written.
+한 번에 설치에서도 처음에 드라이버를 검사하고 준비합니다. 드라이버 준비를 별도로 먼저 하면 기록 전에 연결 문제를 확인할 수 있습니다.
 
-**macOS:** no driver installation is needed.
-- Close Photos, Image Capture and anything else that might be using the camera's card.
-- On **连接与驱动**, click **准备 USB 服务连接 (Prepare USB service connection)**.
-- Every camera operation opens a Terminal window. Type your **Mac login password** there so the app can take over USB through sudo. The app never reads or stores the password; closing the window before typing it cancels the camera operation.
+**macOS:** 드라이버 설치가 필요하지 않습니다. 사진, 이미지 캡처 등 카메라 카드에 접근하는 앱을 종료하고 **连接与驱动**에서 **准备 USB 服务连接(USB 서비스 연결 준비)**를 누르십시오. 카메라 작업마다 Terminal이 열리면 **Mac 로그인 암호**를 입력합니다. sudo로 USB 제어 권한을 얻는 과정이며 앱이 암호를 읽거나 저장하지 않습니다. 입력 전에 Terminal을 닫으면 카메라 작업이 취소됩니다.
 
-### Driver errors: uninstall, then reinstall
+### 드라이버 오류: 제거 후 재설치
 
-The driver state may be wrong if any of these happen:
-- Step 1 fails, or reports that `0336` appeared but its interface couldn't be opened.
-- You previously installed another driver with Zadig or a similar tool.
-- Windows keeps recognizing the camera incorrectly after you connect it.
+1단계 실패, `0336` 인터페이스 열기 실패, 과거 Zadig 드라이버 설치 이력, Windows의 잘못된 기기 인식이 있다면 다음을 수행하십시오.
 
-In that case, **uninstall first, then reinstall with Step 1**:
+1. **连接与驱动**에서 **卸载相机驱动，恢复 Windows 默认连接(카메라 드라이버 제거 및 Windows 기본 연결 복원)**를 누르고 관리자 권한을 허용합니다. Sony `054C:0E8A`와 `054C:0336`의 제삼자 드라이버만 제거하며 먼저 작업 폴더에 드라이버 패키지를 백업합니다. 카메라 펌웨어와 다른 기기는 변경하지 않습니다.
+2. 로그에 따라 USB를 분리한 뒤 대용량 저장 장치 모드로 다시 연결합니다. Windows 재시작이 필요하다고 표시되면 컴퓨터를 재시작하십시오. 앱이 자동으로 재시작하지는 않습니다.
+3. [1단계](#1단계-드라이버-설치--windows)의 **准备两阶段驱动并测试连接**를 다시 실행합니다.
 
-1. On **连接与驱动**, click **卸载相机驱动，恢复 Windows 默认连接 (Uninstall camera driver, restore Windows default)**. Confirm, and allow administrator permission in the Windows prompt.
-   - Only third-party drivers for Sony `054C:0E8A` and `054C:0336` are removed. Other devices are untouched, and the camera firmware is not modified.
-   - The driver packages are backed up to the job folder before removal.
-2. Follow the log:
-   - Usually: **unplug USB and plug it back in using Mass Storage mode**, so Windows rebinds its default driver.
-   - If the log says Windows needs a restart, restart the computer (the app never restarts it for you).
-3. Go back to [Step 1](#step-1-install-the-drivers-windows) and click **准备两阶段驱动并测试连接** again.
+계속 실패하면 케이블과 컴퓨터 후면 포트를 바꾸고 USB 안정성 검사를 실행하십시오. 해결되지 않으면 창 아래의 **导出诊断包(진단 묶음 내보내기)**로 내보내 커뮤니티에 공유하십시오.
 
-If it still fails, try another cable and a USB port on the back of the computer, and run **检测 USB 连接稳定性（只读）** to narrow it down. If that doesn't help, click **导出诊断包 (Export diagnostics)** at the bottom of the window and share the bundle in the community group.
+### 계속 실패할 때: Zadig 수동 설치
 
-### Still failing: install with Zadig
+자동 설치가 실패하는 컴퓨터에서는 [Zadig](https://zadig.akeo.ie/)로 수동 설치할 수 있습니다. 컴퓨터의 USB 드라이버 연결을 변경하는 작업이며 카메라에는 기록하지 않습니다. **连接与驱动**의 **用 Zadig 手动安装驱动（自动失败时）(자동 설치 실패 시 Zadig로 수동 설치)**에서도 같은 안내와 다운로드 링크를 제공합니다.
 
-On computers where the app's automatic driver install fails, installing the driver by hand with [Zadig](https://zadig.akeo.ie/) usually works. Nothing is written to the camera; this only changes which driver this computer uses for the camera's two USB identities.
-
-On the app's **连接与驱动 (Connection & drivers)** page, the **用 Zadig 手动安装驱动（自动失败时） (Install with Zadig)** button sits next to **准备两阶段驱动并测试连接（自动） (automatic)** and opens these same steps with a Zadig download link.
-
-**First: the camera has two USB identities, and both need a driver**
-
-| Stage | Name in Zadig | USB ID | When it appears |
+| 단계 | Zadig 표시 이름 | USB ID | 표시 시점 |
 | --- | --- | --- | --- |
-| Normal connection | `ILCE-7CM2` | `054C` `0E8A` | Camera on, Mass Storage selected, plugged in |
-| Service mode | `Sony USB Device` | `054C` `0336` | Only after the app authenticates; the camera usually shows "Please check the connected device" |
+| 일반 연결 | `ILCE-7CM2` | `054C` `0E8A` | 카메라 전원 켜기, 대용량 저장 장치 모드, USB 연결 |
+| 서비스 모드 | `Sony USB Device` | `054C` `0336` | 앱 인증 후에만 표시. 카메라에는 보통 연결 기기 확인 메시지 표시 |
 
-**Prepare**
+**준비:** Zadig 웹사이트에서 최신 `zadig-x.x.exe`를 내려받습니다. 별도 설치는 필요하지 않습니다. 이 앱을 완전히 종료하고 카메라를 켠 뒤 대용량 저장 장치로 설정하여 데이터 케이블로 직접 연결합니다. 데스크톱 PC는 후면 포트를 사용하십시오.
 
-1. Download the latest `zadig-x.x.exe` from the Zadig website (a single file, nothing to install).
-2. Close this app completely.
-3. Switch the camera on and set USB connection to **Mass Storage** in its menu. Connect it directly with a data cable: no hub, and on a desktop PC use a port on the back.
+**첫째, `0E8A` 드라이버를 설치합니다.**
 
-**Part 1: driver for `0E8A`**
+1. Zadig를 우클릭하여 **관리자 권한으로 실행**합니다. 업데이트 확인 질문은 어느 쪽을 선택해도 됩니다.
+2. **Options → List All Devices**를 선택합니다.
+3. 목록에서 **`ILCE-7CM2`**를 선택하고 **USB ID가 `054C` `0E8A`인지 확인**합니다. 다른 기기의 드라이버를 변경하지 마십시오.
+4. 녹색 화살표 왼쪽은 현재 드라이버(예: `USBSTOR`)입니다. 오른쪽 선택 상자의 위아래 화살표로 **libusbK**를 고릅니다.
+5. **Replace Driver** 또는 **Install Driver**를 누르고 성공 메시지가 나올 때까지 1–2분 기다립니다. 설치 후 드라이브 문자가 사라지고 카메라에 연결 기기 확인 메시지가 나타나는 것은 정상입니다.
 
-1. Right-click Zadig and choose **Run as administrator**. If it asks about checking for updates, either answer is fine.
-2. In the **Options** menu, tick **List All Devices**. Without it the camera doesn't show up.
-3. Pick **`ILCE-7CM2`** in the drop-down at the top.
-4. **Check that the USB ID reads `054C` `0E8A`.** If it doesn't, you picked the wrong entry; try another. Don't change the driver of keyboards, mice, USB drives, network adapters or any other device.
-5. The current driver (for example `USBSTOR`) is left of the green arrow. In the driver box right of the arrow, use the up/down arrows to choose **libusbK**.
-6. Click the big **Replace Driver** button (it reads **Install Driver** when there is no driver yet). Wait 1–2 minutes until it says **The driver was installed successfully**.
-7. Afterwards the camera's drive letter disappears and the camera shows "Please check the connected device". Both are normal.
+**둘째, `0336`을 표시하고 드라이버를 설치합니다.**
 
-**Part 2: make `0336` appear, then give it a driver**
+1. Zadig를 열어 둔 채 이 앱의 **连接与驱动**에서 **准备两阶段驱动并测试连接**를 누릅니다. 앱이 `0E8A` 드라이버로 인증하면 카메라가 `Sony USB Device`(`054C 0336`)로 전환됩니다.
+2. 앱이 자동으로 `0336` 드라이버를 설치하고 **服务连接成功，驱动准备结束**를 표시하면 셋째 절차로 이동합니다. 드라이버 없음, 인터페이스 열기 실패, `0336` 미표시가 나오면 **USB를 분리하거나 전원을 끄지 말고** 다음을 수행합니다.
+3. Zadig에서 **Options → List All Devices**를 다시 눌러 갱신하고 **`Sony USB Device`**, **`054C` `0336`**을 확인합니다. 목록에 없으면 서비스 모드가 종료된 것이므로 이 부분의 1번을 반복하고 표시 직후 갱신합니다.
+4. **libusbK**를 선택하고 **Replace Driver** 또는 **Install Driver**를 눌러 성공을 기다립니다.
 
-1. Leave Zadig open. In this app open **连接与驱动 (Connection & drivers)** and click **准备两阶段驱动并测试连接 (Prepare drivers and test connection)**.
-2. The app uses the `0E8A` driver you just installed and authenticates. The camera then becomes `Sony USB Device` (`054C 0336`).
-   - If the app installs the `0336` driver itself and the log says **“服务连接成功，驱动准备结束” (service connection succeeded, drivers ready)**, you're done; go to Part 3.
-   - If the log says `0336` has no driver, its interface can't be opened, or `0336` never appears: **don't unplug the cable or switch the camera off**; continue with the next step.
-3. Back in Zadig, click **Options → List All Devices** again to refresh. Pick **`Sony USB Device`** and **check that the USB ID reads `054C` `0336`**.
-   - If `0336` isn't listed, the camera has already left service mode. Repeat step 1 of this part and refresh Zadig as soon as `0336` appears.
-4. Choose **libusbK** again, click **Replace Driver** or **Install Driver**, and wait for the success message.
+**셋째, 전원을 완전히 재시작하고 확인합니다.**
 
-**Part 3: power-cycle and test again**
+1. USB를 분리하고 카메라를 끈 뒤 **배터리를 약 1분간 분리**합니다. 다시 켜고 대용량 저장 장치로 연결합니다.
+2. 앱에서 **准备两阶段驱动并测试连接**를 다시 실행합니다. 성공 로그를 확인한 뒤 [3단계](#3단계-한-번에-설치)로 진행합니다. 이전 버전 사용 이력이 있다면 [2단계](#2단계-이전-버전-사용-시-원래-기능-복원)를 먼저 수행하십시오.
 
-1. Unplug USB, switch the camera off and **remove the battery for about a minute**. Put it back, switch on, select Mass Storage and reconnect.
-2. In this app click **准备两阶段驱动并测试连接** again. Once the log says **“服务连接成功，驱动准备结束”**, continue with [Step 3: One-click install](#step-3-one-click-install).
+Windows 장치 관리자에 **libusbK USB Devices** 범주와 `ILCE-7CM2`가 표시되어야 하며, `0336` 설치 후에는 `Sony USB Device`도 확인할 수 있습니다.
 
-**Check the result:** Windows Device Manager should show a **libusbK USB Devices** category containing `ILCE-7CM2`, and `Sony USB Device` once the `0336` driver is installed.
+- **libusbK 설치 실패:** Zadig를 관리자 권한으로 다시 실행하고, 계속 실패하면 **WinUSB**를 선택합니다. 앱은 WinUSB/libusbK/libusb0을 지원합니다.
+- **카메라가 목록에 없음:** List All Devices, 전원, 대용량 저장 장치 모드, 데이터 케이블을 확인합니다.
+- **원상 복구:** 앱의 **卸载相机驱动，恢复 Windows 默认连接**로 Zadig 드라이버까지 제거한 뒤 USB를 다시 연결하면 드라이브로 표시됩니다.
+- **Mac:** 드라이버 설치가 필요하지 않습니다.
 
-**Problems**
+### 2단계: 이전 버전 사용 시 원래 기능 복원
 
-- **libusbK fails to install:** run Zadig as administrator again. If it still fails, choose **WinUSB** instead. The app works with WinUSB, libusbK or libusb0.
-- **The camera isn't in the drop-down:** make sure **List All Devices** is ticked, the camera is on in Mass Storage mode, and try another data cable.
-- **To undo it:** click **卸载相机驱动，恢复 Windows 默认连接 (Uninstall camera driver)** on the **连接与驱动** page; this also removes drivers installed with Zadig. Then unplug and replug USB and the camera appears as a drive again.
-- **Macs need no driver.**
+**이 카메라에서 이 프로젝트의 어떤 버전이든 사용했다면 3.0 설치 전에 원래 기능을 복원하십시오.** FL23 v1.0/v2.x, `lut.py`, `shutter.py`, `vertical.py` 및 과거 데스크톱 미리보기 버전도 포함합니다. 이전 변경의 잔여물을 정리하여 순정 2.01 상태에서 시작합니다. 수정 이력이 없는 카메라는 이 단계를 건너뜁니다.
 
-### Step 2: Installed an earlier version? Restore factory functions first
-
-**If this camera has ever used any version of this project, restore factory functions before installing 3.0.** That includes FL23 v1.0/v2.x, looks imported with `lut.py`, `shutter.py` or `vertical.py`, and earlier desktop previews. This clears leftovers from older versions so 3.0 starts from a clean stock 2.01 state.
-
-A camera that was never modified can skip this step.
-
-1. On the camera, switch Creative Look to **ST**.
-2. Open **恢复原厂功能 (Restore factory functions)** and click **恢复／继续恢复原厂 2.01 功能（无需旧备份）(Restore / continue restoring factory 2.01 functions, no old backup needed)**. Confirm power to start.
-   - The app has built-in stock 2.01 data for the regions it changes, so no old backup or firmware download is needed.
-   - Body calibration, counters and unrelated settings are kept.
-3. After the write and full readback, a dialog says **the restore is not finished yet**. Do a [cold reload](#before-you-start) and check that the camera shows a live view.
-4. Reconnect USB (Mass Storage) and click **重启后核对并完成恢复 (Verify after restart and finish restore)**. The restore is complete only when this check passes; the app then clears the old installation state.
+1. 카메라의 크리에이티브 룩을 **ST**로 전환합니다.
+2. **恢复原厂功能(원래 기능 복원)**에서 **恢复／继续恢复原厂 2.01 功能（无需旧备份）(순정 2.01 기능 복원/계속 · 이전 백업 불필요)**를 누르고 전원을 확인합니다. 수정 영역의 순정 데이터가 내장되어 있어 과거 백업이나 펌웨어 다운로드가 필요하지 않습니다. 바디 보정값, 카운터, 관련 없는 설정은 유지합니다.
+3. 쓰기와 전체 읽기 검증 후 **복원이 아직 끝나지 않았음**을 알리는 대화상자가 표시됩니다. [완전 전원 재시작](#시작-전-준비)을 수행하고 라이브 뷰가 나오는지 확인합니다.
+4. 대용량 저장 장치로 USB를 다시 연결하고 **重启后核对并完成恢复(재시작 후 확인 및 복원 완료)**를 누릅니다. 이 검증에 통과해야 복원이 완료되며 이전 설치 상태가 정리됩니다.
 
 > [!WARNING]
-> Restoring sets all six custom slots to ST. Recipes you had in them **cannot be recovered**. Write down any settings you want to keep first.
+> 복원하면 사용자 슬롯 6개가 모두 ST로 초기화됩니다. 기존 레시피는 **복구할 수 없으므로** 보관할 설정을 먼저 적어 두십시오.
 
-If the restore is interrupted, click the same button again: the app reads the camera's current state and finishes only what's left. If the button changes to **断电后重试恢复（本次尚未写入）(Retry after power cycle; nothing written yet)**, nothing was written this time. Do a cold reload as the dialog says, then click it.
+복원이 중단되면 같은 버튼으로 현재 상태를 읽고 남은 부분을 진행합니다. **断电后重试恢复（本次尚未写入）(전원 완전 재시작 후 복원 재시도 · 이번에는 기록되지 않음)**가 나오면 안내대로 완전 전원 재시작 후 누릅니다. 결과 불명 또는 검토 필요 상태는 [문제 해결](#문제-해결)의 지침을 따르십시오.
 
-### Step 3: One-click install
+### 3단계: 한 번에 설치
 
 > [!IMPORTANT]
-> Finish [Step 1](#step-1-install-the-drivers-windows) before the one-click install, and make sure the log says “服务连接成功，驱动准备结束” (service connection succeeded, drivers ready). Many failed installs come from starting the one-click install before the drivers work. The app also reminds you the first time you run it on a computer. If the drivers won't install, use [install with Zadig](#still-failing-install-with-zadig).
+> 먼저 1단계를 완료하고 로그의 **服务连接成功，驱动准备结束**를 확인하십시오. 드라이버 준비 전에 설치하면 실패할 수 있습니다. 자동 설치가 안 되면 Zadig 절차를 확인하십시오.
 
-1. Open **首页 · 一键安装 (Home · One-click install)**. These are selected by default:
-   - **Install the six built-in looks** (replaces custom slots 1–6; Sony's own Creative Looks are kept)
-   - **Enable FL2/FL3**
-   - **Enable Sony's native electronic shutter sound**
-   - **Save Vertical Display as on**
-   - **Install the Lightroom auto-profile plugin**: optional, needs Lightroom Classic on this computer
-2. Click **一键安装 (One-click install)** and confirm power. The app checks the drivers, merges every selected option into a single write and reads everything back.
-3. When the dialog says reading and writing have ended, do a [cold reload](#before-you-start).
-4. Switch the camera on, reconnect USB (Mass Storage) and click **继续安装 (Continue installation)** on Home. It's the same button. The app checks that the camera has restarted and loaded the changes, then sets up sound and the plugin. **Nothing is written again.**
-5. An **Installation complete** dialog lists the looks and features that were installed. You can reopen it later with **查看上次安装结果（不连接相机）(View last installation result, no camera access)**.
+1. **首页 · 一键安装(홈 · 한 번에 설치)**를 엽니다. 기본 선택은 룩 6개 설치(사용자 슬롯 1–6 교체, Sony 기본 룩 유지), FL2/FL3 활성화, Sony 전자 셔터음 활성화, 세로 표시 켜기, Lightroom 자동 프로파일 플러그인 설치입니다. 플러그인은 선택 사항이며 해당 컴퓨터에 Lightroom Classic이 필요합니다.
+2. **一键安装(한 번에 설치)**를 누르고 전원을 확인합니다. 앱이 드라이버를 확인하고 선택 항목을 하나의 쓰기로 합친 뒤 전체를 읽어 검증합니다.
+3. 읽기와 쓰기가 끝났다는 대화상자 후 [완전 전원 재시작](#시작-전-준비)을 수행합니다.
+4. 카메라를 켜고 대용량 저장 장치로 연결한 뒤 홈의 같은 버튼 **继续安装(설치 계속)**를 누릅니다. 재시작과 변경 사항 로드를 검증하고 소리와 플러그인을 설정합니다. 이 단계에서 앞의 기록을 다시 수행하지 않습니다.
+5. 설치 완료 대화상자에서 룩과 기능 목록을 확인합니다. **查看上次安装结果（不连接相机）(마지막 설치 결과 보기 · 카메라 연결 없음)**로 다시 볼 수 있습니다.
 
-If the app says that names are written but programs are not yet, the camera is still holding its old resources. Do a cold reload as the dialog says, reconnect and click **继续安装** again. Names are not written twice.
+이름만 기록되고 프로그램이 아직 기록되지 않았다는 안내가 나오면 이전 리소스가 남아 있는 상태입니다. 완전 전원 재시작 후 다시 연결하여 **继续安装**를 누르십시오. 이름은 중복 기록하지 않습니다.
 
-**Default six looks:**
-
-| Custom slot | 1 | 2 | 3 | 4 | 5 | 6 |
+| 사용자 슬롯 | 1 | 2 | 3 | 4 | 5 | 6 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Look | Classic Neg. (NC) | Classic Chrome (CC) | Nostalgic Neg. (NN) | Astia | GR Positive Film | GR Negative Film |
+| 기본 룩 | Classic Neg. (NC) | Classic Chrome (CC) | Nostalgic Neg. (NN) | Astia | GR Positive Film | GR Negative Film |
 
-To install your own looks instead, untick the built-in six, expand **改用自己的 A7Look 文件 (Use your own A7Look files)** and pick an `.a7look` file for each slot. Slots left empty stay as they are.
+자신의 룩을 쓰려면 기본 룩 6개 선택을 해제하고 **改用自己的 A7Look 文件(자신의 A7Look 파일 사용)**을 펼쳐 슬롯별 `.a7look`을 지정합니다. 비워 둔 슬롯은 유지됩니다.
 
-### Step 4: Check on the camera
+### 4단계: 카메라에서 확인
 
-- Switch between ST and each custom slot. The live view should change immediately. Take a photo and play it back.
-- Keep each custom slot's base look set to ST; with another base look the custom look may not apply.
-- In the Creative Look list, check that FL2 and FL3 can be selected, shot and played back.
-- Take a shot with the electronic shutter and listen for the sound. If you hear nothing, check the camera's Audio Signals setting.
-- Hold the camera vertically and check that the shooting information rotates.
+- ST와 사용자 슬롯을 전환하여 라이브 뷰가 즉시 바뀌는지 확인하고 사진을 촬영·재생합니다.
+- 사용자 슬롯의 기반 룩은 ST로 유지합니다. 다른 기반 룩에서는 사용자 룩이 적용되지 않을 수 있습니다.
+- FL2/FL3 선택, 촬영, 재생을 확인합니다.
+- 전자 셔터로 촬영하여 소리를 확인합니다. 소리가 없으면 카메라의 오디오 신호 설정을 확인합니다.
+- 카메라를 세로로 들어 촬영 정보가 회전하는지 확인합니다.
 
-The built-in looks are fitted approximations of their source DCPs; colors may not match the DCP exactly.
+내장 룩은 원본 DCP에 맞춘 근사 결과이므로 색상이 정확히 일치하지 않을 수 있습니다.
 
-## Using each feature on its own
+## 기능별 사용법
 
-Every write follows the same pattern: write → full readback → dialog asking for a cold reload. Once Step 1 is done, each page can be used on its own.
+모든 쓰기는 **기록 → 전체 읽기 검증 → 완전 전원 재시작 안내** 순서입니다. 1단계 완료 후 각 페이지를 개별적으로 사용할 수 있습니다.
 
 ### FL2 / FL3
 
-- **启用／重新启用 FL2 / FL3 (Enable / re-enable)**: cold-reload after the write. If you can select them on the camera, you're done; no need to reconnect and verify.
-- **从列表移除 FL2 / FL3，保留自定义外观 (Remove from list, keep custom looks)**: hides the menu entries only. Shared code used by custom looks stays, so you can enable them again later.
-- Switch the camera to ST before removing them.
+- **启用／重新启用 FL2 / FL3(활성화/재활성화):** 기록 후 완전 전원 재시작합니다. 카메라에서 선택할 수 있으면 완료이며 별도 재연결 검증은 필요하지 않습니다.
+- **从列表移除 FL2 / FL3，保留自定义外观(목록에서 FL2/FL3 제거 · 사용자 룩 유지):** 메뉴 항목만 숨기고 사용자 룩이 사용하는 공통 코드는 유지합니다. 나중에 다시 활성화할 수 있습니다. 제거 전에 카메라를 ST로 전환하십시오.
 
-### Custom Creative Looks
+### 사용자 지정 크리에이티브 룩
 
-1. Click **+ 添加操作项 (Add operation)** once for each slot you want to change:
-   - **写入 A7Look (Write A7Look)**: choose a `.a7look` file and, optionally, the name shown on the camera (empty uses the name stored in the file).
-   - **恢复 ST 默认 (Restore ST)**: resets the slot to ST. New items default to this.
-2. Click **查看并应用这 N 项更改 (Review and apply N changes)**, check the list and confirm. All listed slots are written in one go; other slots are left alone.
-3. Cold-reload and it's ready to use. No separate verification needed.
+1. 변경할 슬롯마다 **+ 添加操作项(작업 추가)**를 누릅니다. **写入 A7Look(A7Look 기록)**에서 파일과 선택적 이름을 지정하거나 **恢复 ST 默认(ST 기본값 복원)**를 선택합니다. 이름을 비우면 파일의 이름을 사용하며 새 작업의 기본값은 ST 복원입니다.
+2. **查看并应用这 N 项更改(N개 변경 검토 및 적용)**에서 목록을 확인하고 승인합니다. 지정한 슬롯을 한 번에 기록하고 나머지는 유지합니다.
+3. 완전 전원 재시작하면 사용할 수 있습니다. 별도 검증 작업은 필요하지 않습니다.
 
 > [!NOTE]
-> Custom looks are written with **ST as their base look**. Just select the custom slot on the camera; you don't need to switch the Creative Look to ST. But don't change that custom slot's base look to anything other than ST in the camera menu, or the custom look may not apply or the colors may be wrong; switching it back to ST fixes it. The camera does not lock this option.
+> 사용자 룩은 **ST를 기반 룩으로** 기록합니다. 카메라에서 사용자 슬롯을 선택하면 되며 별도로 ST로 전환할 필요는 없습니다. 해당 슬롯의 기반 룩을 ST 외의 값으로 바꾸면 적용 실패나 색상 오류가 생길 수 있습니다. ST로 되돌리면 해결됩니다. 카메라는 이 선택을 잠그지 않습니다.
 
-Tools on the same page:
-- **打开内置 DCP／A7Look 配对库 (Open paired DCP/A7Look library)**: 15 pairs (11 Fujifilm, 4 Ricoh); each DCP sits next to its `.a7look` with the same name.
-- **从 DCP／LUT 生成 A7Look… (Generate A7Look from DCP/LUT)**: offline conversion; doesn't connect to the camera.
-  - A **CUBE** must take **Sony ST / sRGB** input and output sRGB. **Log LUTs such as S-Log3 can't be used directly**; see [LUT formats and color spaces](docs/en/lut-formats.md).
-  - A **DCP** is parsed and fitted by the app itself; Lightroom isn't needed.
-- **安装 LrC 自动识别插件… (Install Lightroom plugin)**: after installing, enable it once in Lightroom's Plug-in Manager. From then on, when you import RAW files it applies the DCP for the slot each shot used. It never alters the RAW data itself.
+같은 페이지에서 다음 도구를 사용할 수 있습니다.
 
-### Electronic shutter sound
+- **打开内置 DCP／A7Look 配对库(내장 라이브러리 열기):** Fujifilm 11쌍과 Ricoh 4쌍. DCP와 `.a7look`이 같은 이름으로 함께 있습니다.
+- **从 DCP／LUT 生成 A7Look…(DCP/LUT에서 A7Look 생성):** 카메라 연결 없는 오프라인 변환. CUBE는 **Sony ST / sRGB 입력 → sRGB 출력**이어야 합니다. **S-Log3 등 Log LUT는 바로 사용할 수 없습니다.** [LUT 형식과 색공간 · 영어](docs/en/lut-formats.md)를 확인하십시오. DCP는 앱이 직접 분석하고 근사하므로 Lightroom이 필요하지 않습니다.
+- **安装 LrC 自动识别插件…(Lightroom 자동 인식 플러그인 설치):** 설치 후 Lightroom 플러그인 관리자에서 한 번 활성화하십시오. 이후 RAW 가져오기 시 촬영 슬롯에 맞는 DCP를 적용하며 RAW 데이터 자체는 변경하지 않습니다.
 
-1. **开启电子快门声 (Turn on shutter sound)**: turns on Sony's native electronic shutter sound. Cold-reload after the write.
-2. Choose an audio or video file, set the **start** and **length** (0.01–2 s), then click **转换所选片段 (Convert selected clip)**. This runs on the computer only.
-3. Optionally adjust the volume with **−3 dB / +3 dB / 还原转换时音量 (reset to converted volume)**.
-4. Click **保存当前自定义声音 (Save current custom sound)** and cold-reload after the write.
-5. **相机内临时试听 (Temporary in-camera audition)** is optional. While auditioning, **keep the camera on**, unplug USB and take a test shot; reconnect and save if you like it.
-6. To go back to the original sound, click **恢复原厂音效 (Restore factory sound)**.
+### 전자 셔터음
 
-### Vertical Display
+1. **开启电子快门声(전자 셔터음 켜기)**로 Sony 기본 전자 셔터음을 켜고 완전 전원 재시작합니다.
+2. 오디오 또는 비디오 파일에서 시작 위치와 길이 **0.01–2초**를 설정하고 **转换所选片段(선택 구간 변환)**을 누릅니다. 변환은 컴퓨터에서만 수행합니다.
+3. 필요하면 **−3 dB / +3 dB / 还原转换时音量(변환 당시 음량 복원)**으로 음량을 조절합니다.
+4. **保存当前自定义声音(현재 사용자 소리 저장)**을 누르고 기록 후 완전 전원 재시작합니다.
+5. 선택 사항인 **相机内临时试听(카메라에서 임시 미리 듣기)** 중에는 **카메라 전원을 켜 둔 채** USB를 분리하고 시험 촬영합니다. 마음에 들면 다시 연결하여 저장합니다.
+6. 기본 소리로 돌아가려면 **恢复原厂音效(기본 효과음 복원)**를 누릅니다.
+
+### 세로 표시
 
 > [!NOTE]
-> The vertical menu frames are being rewritten. This section will be updated when that work is finished.
+> 세로 메뉴 프레임은 재작성 중입니다. 완료되면 이 부분을 갱신합니다.
 
-- **启用竖屏显示 (Enable Vertical Display)**: saves the switch. After a cold reload, shooting information and icons rotate when you hold the camera vertically.
-- **关闭竖屏显示 (Disable Vertical Display)**: turns it off first, then reverts the related changes.
-- Both buttons are safe to click again; nothing is rewritten when the state already matches.
+- **启用竖屏显示(세로 표시 활성화):** 설정을 저장합니다. 완전 전원 재시작 후 카메라를 세로로 들면 촬영 정보와 아이콘이 회전합니다.
+- **关闭竖屏显示(세로 표시 비활성화):** 먼저 기능을 끄고 관련 변경을 되돌립니다.
+- 이미 목표 상태이면 다시 기록하지 않으므로 두 버튼 모두 다시 누를 수 있습니다.
 
-### Restore factory functions
+### 원래 기능 복원
 
-See [Step 2](#step-2-installed-an-earlier-version-restore-factory-functions-first). The advanced section also offers two other ways to restore:
-- Import a complete stock `BODYDATA.DAT` and restore from it.
-- Return to an earlier state from an old body backup (one made by older FL23 or `lut.py` versions).
+[2단계](#2단계-이전-버전-사용-시-원래-기능-복원)를 따르십시오. 고급 항목에서는 완전한 순정 `BODYDATA.DAT`로 복원하거나, 과거 FL23/`lut.py`가 만든 바디 백업으로 이전 상태를 복원할 수도 있습니다.
 
-## Troubleshooting
+## 문제 해결
 
-| Symptom | What to do |
+| 증상 | 조치 |
 | --- | --- |
-| Camera shows "Please check the connected device" | Normal. Follow the app's log. |
-| `054C:0E8A` not found | The camera isn't in Mass Storage mode, or the cable can't carry data. Fix it and replug. |
-| `0336` never appears | The app cools down and retries automatically, up to 3 times. If it still fails, see [Driver errors](#driver-errors-uninstall-then-reinstall) or [install with Zadig](#still-failing-install-with-zadig). |
-| After authentication the camera jumps to playback and `0336` never appears | Try a USB 2.0 port on the computer (or a USB 2.0 cable or hub). On some computers the camera won't enter service mode over a USB 3 high-speed link. |
-| `0336` appears but its interface can't be opened | A driver problem. Uninstall and reinstall the driver; don't keep clicking install. |
-| Install or restore was interrupted | Click **the same button** again. The app reads the current state and picks up where it stopped; finished parts aren't rewritten. |
-| App reports an unknown result or asks for review | **Don't retry the write.** Click **导出诊断包 (Export diagnostics)** and share it in the community group. |
-| No shutter sound | Check that Audio Signals is on in the camera menu. |
-| Look colors differ slightly from the DCP | Expected: the in-camera table is a fitted approximation. |
-| Terminal asks for a password on a Mac | Enter your Mac login password; it's used by sudo to take over USB. |
+| 카메라에 연결 기기 확인 메시지 표시 | 정상입니다. 앱 로그를 따르십시오. |
+| `054C:0E8A` 검색 실패 | 대용량 저장 장치 모드와 데이터 케이블을 확인하고 다시 연결하십시오. |
+| `0336`이 나타나지 않음 | 앱이 대기 후 최대 3번 재시도합니다. 계속 실패하면 드라이버 제거·재설치 또는 Zadig 절차를 확인하십시오. |
+| 인증 후 재생 화면으로 이동하고 `0336`이 안 나타남 | 컴퓨터의 USB 2.0 포트, USB 2.0 케이블 또는 허브를 시험하십시오. 일부 컴퓨터의 USB 3 고속 연결에서는 서비스 모드로 진입하지 못합니다. |
+| `0336`은 나타나지만 인터페이스 열기 실패 | 드라이버 제거 후 재설치하십시오. 설치 버튼을 반복해서 누르지 마십시오. |
+| 설치·복원 중단 | 같은 버튼으로 현재 상태를 읽고 남은 작업을 진행합니다. 완료된 부분은 다시 기록하지 않습니다. 결과 불명·검토 필요 상태에서는 아래 지침을 우선합니다. |
+| 결과 불명 또는 검토 필요 안내 | **쓰기를 재시도하지 마십시오.** **导出诊断包(진단 묶음 내보내기)**로 내보내 커뮤니티에 공유하십시오. |
+| 셔터음 없음 | 카메라의 오디오 신호 설정을 켜십시오. |
+| DCP와 룩 색상이 조금 다름 | 카메라 내부 테이블은 근사 결과이므로 차이가 있을 수 있습니다. |
+| Mac Terminal의 암호 요청 | sudo의 USB 제어 권한을 위해 Mac 로그인 암호를 입력하십시오. |
 
-A diagnostic bundle contains device information and local paths, so review it before sharing it publicly. It never includes firmware, body calibration or photos.
+진단 묶음에는 기기 정보와 로컬 경로가 포함됩니다. 공개 공유 전에 내용을 확인하십시오. 펌웨어, 바디 보정값, 사진은 포함하지 않습니다.
 
-## Verification status
+## 검증 현황
 
-| Area | Status |
+아래는 원문 README에 기록된 검증 현황입니다.
+
+| 항목 | 상태 |
 | --- | --- |
-| FL2/FL3, six-look install, factory restore | Written, read back and verified after restart on the author's Windows + A7C II |
-| Custom look preview/photos, temporary audition | Tested on the same camera |
-| Persistent custom shutter sound | Offline tests and packaged self-test pass; long-term camera testing in progress |
-| Vertical Display (including menu frames) | Being rewritten; camera acceptance pending |
-| macOS USB | Package builds; USB on a real Mac not yet verified |
+| FL2/FL3, 룩 6개 설치, 원래 기능 복원 | 저자의 Windows + A7C II에서 기록, 전체 읽기 검증, 재시작 후 검증 완료 |
+| 사용자 룩 미리 보기·사진, 임시 미리 듣기 | 같은 카메라에서 시험 완료 |
+| 사용자 셔터음 영구 저장 | 오프라인 시험과 패키지 자체 시험 통과. 장기 실기 시험 진행 중 |
+| 세로 표시 및 메뉴 프레임 | 재작성 중. 실기 검수 대기 |
+| macOS USB | 패키지 빌드 완료. 실제 Mac USB 동작 미검증 |
 
-Offline tests and byte readback can't prove the camera works correctly in every situation, and everything so far has been verified on a single camera. Test records for each version are in the [changelog](docs/en/changelog.md).
+오프라인 시험과 바이트 읽기 검증만으로 모든 상황의 정상 동작을 입증할 수는 없습니다. 현재 실기 검증은 카메라 한 대에서 수행되었습니다. 버전별 기록은 [변경 이력 · 영어](docs/en/changelog.md)를 확인하십시오.
 
-## Command line and development
+## 명령줄 및 개발
 
-The interface covers everyday use. The original command-line tools remain for advanced users and development:
-
-| Entry | Purpose |
+| 진입점 | 용도 |
 | --- | --- |
-| `python desktop.py` | Run the desktop app from source (64-bit Python 3.11; `pip install -r desktop-requirements.txt` first) |
-| `FL23.cmd` | Legacy FL2/FL3 command-line installer |
-| `python lut.py` | Legacy look import and single-slot restore |
-| `python recovery.py` | Full rollback from an original backup |
-| `python a7look_compile.py` | Offline DCP/CUBE → `.a7look` compiler |
+| `python desktop.py` | 소스에서 앱 실행. 64비트 Python 3.11 및 `desktop-requirements.txt` 의존성 필요 |
+| `FL23.cmd` | 기존 FL2/FL3 명령줄 설치 도구 |
+| `python lut.py` | 기존 룩 가져오기 및 단일 슬롯 복원 |
+| `python recovery.py` | 원본 백업으로 전체 되돌리기 |
+| `python a7look_compile.py` | 오프라인 DCP/CUBE → `.a7look` 변환 |
 
-Offline tests (no camera access): `python -m pytest dev/desktop -q`. Architecture, build and packaging: [development guide](docs/en/development.md). Read [AGENTS.md](AGENTS.md) before letting an AI change the code.
+Python 환경은 uv로 준비할 수 있습니다.
 
-## Older releases
+```sh
+uv venv --python 3.11
+uv pip install -r desktop-requirements.txt
+uv run --no-project python desktop.py
+```
 
-- [v2.2-preview.1](https://github.com/QAQLeonard/a7c2-fl23-research/releases/tag/v2.2-preview.1): command-line FL23, `lut.py`, `recovery.py`
+카메라 접근 없는 오프라인 시험은 원문의 `python -m pytest dev/desktop -q`를 따릅니다. uv 환경에서는 pytest 설치 후 `uv run --no-project python -m pytest dev/desktop -q`로 실행할 수 있습니다. 구조, 빌드, 패키징은 [개발 안내 · 영어](docs/en/development.md)를 확인하십시오. AI에게 코드 수정을 맡기기 전에 [AGENTS.md](AGENTS.md)를 읽으십시오.
+
+## 이전 버전
+
+- [v2.2-preview.1](https://github.com/QAQLeonard/a7c2-fl23-research/releases/tag/v2.2-preview.1): 명령줄 FL23, `lut.py`, `recovery.py`
 - [v2.1](https://github.com/QAQLeonard/a7c2-fl23-research/releases/tag/v2.1) · [v1.0](https://github.com/QAQLeonard/a7c2-fl23-research/releases/tag/v1.0)
-- [All 18 original DCP files](https://github.com/QAQLeonard/a7c2-fl23-research/releases/download/v2.1/a7c2-dcp-profiles-2026-10-18.zip) ([sources](docs/en/notices.md))
+- [원본 DCP 18개 전체](https://github.com/QAQLeonard/a7c2-fl23-research/releases/download/v2.1/a7c2-dcp-profiles-2026-10-18.zip) · [출처](docs/en/notices.md)
 
-If your camera used an older version, do [Step 2](#step-2-installed-an-earlier-version-restore-factory-functions-first) before upgrading.
+이전 버전 사용 이력이 있다면 업그레이드 전에 [2단계](#2단계-이전-버전-사용-시-원래-기능-복원)를 수행하십시오.
 
-## Credits and licenses
+## 저작권 및 라이선스
 
-Original project code in this distribution uses the unmodified standard [PolyForm Noncommercial License 1.0.0](LICENSE). All commercial use and profit-making are prohibited. Earlier versions and third-party material retain their original terms; see the [legacy MIT text](docs/licenses/project-legacy-MIT.txt). DCPs, reference looks and bundled third-party components keep their own licenses and attribution; see [notices](docs/en/notices.md). Fujifilm DCP references are credited to **门萨特里顿** and Ricoh references to **爸总林先森** on Xiaohongshu.
+배포본의 프로젝트 자체 코드는 변경하지 않은 표준 [PolyForm Noncommercial License 1.0.0](LICENSE)을 따릅니다. 모든 상업적 이용과 수익 창출을 금지합니다. 과거 버전과 제삼자 자료는 각자의 기존 조건을 유지합니다. [과거 MIT 라이선스](docs/licenses/project-legacy-MIT.txt)와 [고지](docs/en/notices.md)를 확인하십시오. DCP, 참조 룩, 포함된 제삼자 구성 요소에는 각각의 라이선스와 출처 표기가 적용됩니다. Fujifilm DCP 참조는 Xiaohongshu의 **门萨特里顿**, Ricoh 참조는 **爸总林先森**의 기여입니다.
 
-This is independent research, not affiliated with Sony, Fujifilm, Ricoh or Adobe. Look names imply neither endorsement nor exact color equivalence, and this tool is not a Sony-signed update.
+이 프로젝트는 Sony, Fujifilm, Ricoh, Adobe와 독립적인 연구입니다. 룩 이름은 해당 회사의 보증이나 정확한 색상 일치를 의미하지 않으며, 이 도구는 Sony가 서명한 업데이트가 아닙니다.
 
-## Film look comparisons
+## 필름 룩 비교
 
 <details>
-<summary>Open the scene-by-scene comparison gallery</summary>
+<summary>장면별 비교 갤러리 열기</summary>
 
-Camera JPEGs, resized, arranged and labelled only; no exposure, white-balance or color edits. Capture settings vary, so these are visual examples rather than controlled measurements.
+카메라 JPEG에 크기 조정, 배열, 이름 표기만 적용했습니다. 노출, 화이트 밸런스, 색상은 수정하지 않았습니다. 촬영 설정이 서로 다르므로 시각적 예시로 참고하십시오. 통제된 측정 자료는 아닙니다.
 
-Each scene shows three separate comparison images in order: **ST / FL / FL2 / FL3**, **ST / NC / CC / NN**, **ST / E / GR Positive / GR Negative**. Read each grid top-left, top-right, bottom-left, bottom-right. NC = Classic Neg., CC = Classic Chrome, NN = Nostalgic Neg., E = Eterna; Astia is not included.
+각 장면에는 **ST / FL / FL2 / FL3**, **ST / NC / CC / NN**, **ST / E / GR Positive / GR Negative** 순서의 비교 이미지 3개가 있습니다. 각 격자는 왼쪽 위, 오른쪽 위, 왼쪽 아래, 오른쪽 아래 순서입니다. NC는 Classic Neg., CC는 Classic Chrome, NN은 Nostalgic Neg., E는 Eterna입니다. Astia는 포함하지 않습니다.
 
-[Download all 19 full-resolution comparisons (about 152 MB)](https://github.com/QAQLeonard/a7c2-fl23-research/releases/download/v2.1/a7c2-film-comparisons-2026-10-18.zip), including the first scene’s extra ST comparison and the overview.
+[전체 비교 이미지 19개 원본 해상도 다운로드 · 약 152 MB](https://github.com/QAQLeonard/a7c2-fl23-research/releases/download/v2.1/a7c2-film-comparisons-2026-10-18.zip). 첫 장면의 추가 ST 비교와 전체 개요도 포함합니다.
 
-**01 · Drinks cabinet**
+**01 · 음료 진열장**
 
-![01 · Drinks cabinet — ST / FL / FL2 / FL3](docs/images/film-comparison/01_饮料柜/01-1_ST_FL_FL2_FL3.jpg)
+![01 · 음료 진열장 — ST / FL / FL2 / FL3](docs/images/film-comparison/01_饮料柜/01-1_ST_FL_FL2_FL3.jpg)
 
-![01 · Drinks cabinet — ST / NC / CC / NN](docs/images/film-comparison/01_饮料柜/01-2_ST_NC_CC_NN.jpg)
+![01 · 음료 진열장 — ST / NC / CC / NN](docs/images/film-comparison/01_饮料柜/01-2_ST_NC_CC_NN.jpg)
 
-![01 · Drinks cabinet — ST / Eterna / GR Positive / GR Negative](docs/images/film-comparison/01_饮料柜/01-3_ST_E_GR正片_GR负片.jpg)
+![01 · 음료 진열장 — ST / Eterna / GR Positive / GR Negative](docs/images/film-comparison/01_饮料柜/01-3_ST_E_GR正片_GR负片.jpg)
 
-**02 · Plants**
+**02 · 식물**
 
-![02 · Plants — ST / FL / FL2 / FL3](docs/images/film-comparison/02_绿植/02-1_ST_FL_FL2_FL3.jpg)
+![02 · 식물 — ST / FL / FL2 / FL3](docs/images/film-comparison/02_绿植/02-1_ST_FL_FL2_FL3.jpg)
 
-![02 · Plants — ST / NC / CC / NN](docs/images/film-comparison/02_绿植/02-2_ST_NC_CC_NN.jpg)
+![02 · 식물 — ST / NC / CC / NN](docs/images/film-comparison/02_绿植/02-2_ST_NC_CC_NN.jpg)
 
-![02 · Plants — ST / Eterna / GR Positive / GR Negative](docs/images/film-comparison/02_绿植/02-3_ST_E_GR正片_GR负片.jpg)
+![02 · 식물 — ST / Eterna / GR Positive / GR Negative](docs/images/film-comparison/02_绿植/02-3_ST_E_GR正片_GR负片.jpg)
 
-**03 · Counter**
+**03 · 카운터**
 
-![03 · Counter — ST / FL / FL2 / FL3](docs/images/film-comparison/03_柜台/03-1_ST_FL_FL2_FL3.jpg)
+![03 · 카운터 — ST / FL / FL2 / FL3](docs/images/film-comparison/03_柜台/03-1_ST_FL_FL2_FL3.jpg)
 
-![03 · Counter — ST / NC / CC / NN](docs/images/film-comparison/03_柜台/03-2_ST_NC_CC_NN.jpg)
+![03 · 카운터 — ST / NC / CC / NN](docs/images/film-comparison/03_柜台/03-2_ST_NC_CC_NN.jpg)
 
-![03 · Counter — ST / Eterna / GR Positive / GR Negative](docs/images/film-comparison/03_柜台/03-3_ST_E_GR正片_GR负片.jpg)
+![03 · 카운터 — ST / Eterna / GR Positive / GR Negative](docs/images/film-comparison/03_柜台/03-3_ST_E_GR正片_GR负片.jpg)
 
-**04 · Spiral staircase**
+**04 · 나선 계단**
 
-![04 · Spiral staircase — ST / FL / FL2 / FL3](docs/images/film-comparison/04_旋转楼梯/04-1_ST_FL_FL2_FL3.jpg)
+![04 · 나선 계단 — ST / FL / FL2 / FL3](docs/images/film-comparison/04_旋转楼梯/04-1_ST_FL_FL2_FL3.jpg)
 
-![04 · Spiral staircase — ST / NC / CC / NN](docs/images/film-comparison/04_旋转楼梯/04-2_ST_NC_CC_NN.jpg)
+![04 · 나선 계단 — ST / NC / CC / NN](docs/images/film-comparison/04_旋转楼梯/04-2_ST_NC_CC_NN.jpg)
 
-![04 · Spiral staircase — ST / Eterna / GR Positive / GR Negative](docs/images/film-comparison/04_旋转楼梯/04-3_ST_E_GR正片_GR负片.jpg)
+![04 · 나선 계단 — ST / Eterna / GR Positive / GR Negative](docs/images/film-comparison/04_旋转楼梯/04-3_ST_E_GR正片_GR负片.jpg)
 
-**05 · Bookshelves**
+**05 · 책장**
 
-![05 · Bookshelves — ST / FL / FL2 / FL3](docs/images/film-comparison/05_书架/05-1_ST_FL_FL2_FL3.jpg)
+![05 · 책장 — ST / FL / FL2 / FL3](docs/images/film-comparison/05_书架/05-1_ST_FL_FL2_FL3.jpg)
 
-![05 · Bookshelves — ST / NC / CC / NN](docs/images/film-comparison/05_书架/05-2_ST_NC_CC_NN.jpg)
+![05 · 책장 — ST / NC / CC / NN](docs/images/film-comparison/05_书架/05-2_ST_NC_CC_NN.jpg)
 
-![05 · Bookshelves — ST / Eterna / GR Positive / GR Negative](docs/images/film-comparison/05_书架/05-3_ST_E_GR正片_GR负片.jpg)
+![05 · 책장 — ST / Eterna / GR Positive / GR Negative](docs/images/film-comparison/05_书架/05-3_ST_E_GR正片_GR负片.jpg)
 
-**06 · Posters**
+**06 · 포스터**
 
-![06 · Posters — ST / FL / FL2 / FL3](docs/images/film-comparison/06_海报/06-1_ST_FL_FL2_FL3.jpg)
+![06 · 포스터 — ST / FL / FL2 / FL3](docs/images/film-comparison/06_海报/06-1_ST_FL_FL2_FL3.jpg)
 
-![06 · Posters — ST / NC / CC / NN](docs/images/film-comparison/06_海报/06-2_ST_NC_CC_NN.jpg)
+![06 · 포스터 — ST / NC / CC / NN](docs/images/film-comparison/06_海报/06-2_ST_NC_CC_NN.jpg)
 
-![06 · Posters — ST / Eterna / GR Positive / GR Negative](docs/images/film-comparison/06_海报/06-3_ST_E_GR正片_GR负片.jpg)
+![06 · 포스터 — ST / Eterna / GR Positive / GR Negative](docs/images/film-comparison/06_海报/06-3_ST_E_GR正片_GR负片.jpg)
 
 </details>
 
-## Acknowledgements
+## 감사의 말
 
-This is my first open-source project, and I never expected this much attention and support. Thank you, everyone.
+저자의 첫 오픈 소스 프로젝트에 보내 주신 관심과 지원에 감사드립니다.
 
-- **Collaborators:** thanks to [@UzLung1435](https://github.com/UzLung1435) for the FL23 refactor, the USB compatibility fixes and the photo/movie curve routing ([#5](https://github.com/QAQLeonard/a7c2-fl23-research/pull/5), [#6](https://github.com/QAQLeonard/a7c2-fl23-research/pull/6)), and to everyone who opened issues, sent pull requests or shared ideas.
-- **Color:** thanks to **门萨特里顿** and **爸总林先森** on Xiaohongshu for the DCPs, and to the community members who helped fit and compare the color standards. The built-in looks wouldn't exist without you.
-- **Projects this work builds on and cites:**
-  - [lzh2016zzz/a7cr-fl23-research](https://github.com/lzh2016zzz/a7cr-fl23-research): FL2/FL3 porting research on the A7CR, the starting point for this project's parameter, label and WBI methods.
-  - [Hearts-Ace/sony-a7r5-custom-firmware](https://github.com/Hearts-Ace/sony-a7r5-custom-firmware): FL2/FL3 firmware adaptation and RAW color research for the A7R V, a key reference for porting the FL2/FL3 color data.
-  - [MDHan/a7c2-fl23-macos](https://github.com/MDHan/a7c2-fl23-macos): the macOS take on the A7C II, the reference for identifying camera storage and claiming USB on a Mac.
-  - [ma1co/Sony-PMCA-RE](https://github.com/ma1co/Sony-PMCA-RE), [ma1co/fwtool.py](https://github.com/ma1co/fwtool.py) and [YuuLuo/a7c2-service-preload](https://github.com/YuuLuo/a7c2-service-preload): service-mode communication, firmware parsing and A7C II service-mode research.
-  - And thanks to every developer who cites, shares or builds on this project.
-- **Testers:** thanks to everyone who tested on their own cameras and patiently sent back logs. Every report made the tool safer.
-- **Everyone:** thanks to all who starred, shared and joined the community chats. You brought this project to 3.0.
+- **공동 기여:** [@UzLung1435](https://github.com/UzLung1435) 님의 FL23 리팩터링, USB 호환성 수정, 사진·동영상 곡선 라우팅 기여 ([#5](https://github.com/QAQLeonard/a7c2-fl23-research/pull/5), [#6](https://github.com/QAQLeonard/a7c2-fl23-research/pull/6))에 감사드립니다. 이슈, 풀 리퀘스트, 아이디어를 보내 주신 모든 분께도 감사드립니다.
+- **색상:** DCP를 제공한 Xiaohongshu의 **门萨特里顿**, **爸总林先森**, 색상 기준의 근사와 비교를 도운 커뮤니티 구성원께 감사드립니다. 내장 룩은 이 기여를 바탕으로 만들어졌습니다.
+- **기반 및 참조 프로젝트:**
+  - [lzh2016zzz/a7cr-fl23-research](https://github.com/lzh2016zzz/a7cr-fl23-research): A7CR FL2/FL3 이식 연구. 이 프로젝트의 파라미터, 이름, WBI 방법의 출발점입니다.
+  - [Hearts-Ace/sony-a7r5-custom-firmware](https://github.com/Hearts-Ace/sony-a7r5-custom-firmware): A7R V의 FL2/FL3 펌웨어 이식 및 RAW 색상 연구. FL2/FL3 색상 데이터 이식의 주요 참조 자료입니다.
+  - [MDHan/a7c2-fl23-macos](https://github.com/MDHan/a7c2-fl23-macos): A7C II의 macOS 구현. Mac에서 카메라 저장 장치 식별과 USB 제어권 확보의 참조 자료입니다.
+  - [ma1co/Sony-PMCA-RE](https://github.com/ma1co/Sony-PMCA-RE), [ma1co/fwtool.py](https://github.com/ma1co/fwtool.py) 및 [YuuLuo/a7c2-service-preload](https://github.com/YuuLuo/a7c2-service-preload): 서비스 모드 통신, 펌웨어 분석, A7C II 서비스 모드 연구.
+  - 이 프로젝트를 인용·공유하거나 이를 기반으로 개발하는 모든 개발자께 감사드립니다.
+- **시험 참여자:** 자신의 카메라에서 시험하고 로그를 보내 주신 모든 분께 감사드립니다. 각 보고가 도구의 안전성 개선에 도움이 되었습니다.
+- **모든 분께:** 별표, 공유, 커뮤니티 참여로 프로젝트가 3.0에 도달하도록 도와주셔서 감사드립니다.
 
-## Sponsor
+## 후원
 
-If this project helped you, you're welcome to buy me a coffee ☕. Sponsoring is entirely optional, unlocks nothing, and the project will stay free and open source.
+프로젝트가 도움이 되었다면 저자를 후원할 수 있습니다. 후원은 자율적이며 추가 기능을 제공하지 않습니다. 프로젝트는 무료 오픈 소스로 유지됩니다.
 
 <table>
   <tr>
-    <td align="center"><img src="docs/images/sponsor/wechat.png" alt="WeChat Pay QR code" width="200"><br>WeChat Pay</td>
-    <td align="center"><img src="docs/images/sponsor/alipay.png" alt="Alipay QR code" width="200"><br>Alipay</td>
-    <td align="center"><img src="docs/images/sponsor/usdt-bep20.png" alt="USDT (BEP20) QR code" width="200"><br>USDT (BEP20)</td>
+    <td align="center"><img src="docs/images/sponsor/wechat.png" alt="WeChat Pay 결제 QR 코드" width="200"><br>WeChat Pay</td>
+    <td align="center"><img src="docs/images/sponsor/alipay.png" alt="Alipay 결제 QR 코드" width="200"><br>Alipay</td>
+    <td align="center"><img src="docs/images/sponsor/usdt-bep20.png" alt="USDT (BEP20) 결제 QR 코드" width="200"><br>USDT (BEP20)</td>
   </tr>
 </table>
 
-**USDT address** (USDT on **BNB Smart Chain / BEP20** only):
+**USDT 주소** · **BNB Smart Chain / BEP20**의 USDT만 지원:
 
 ```text
 0xbf0b2900f7a45a029a42013b90911f796735a753
 ```
 
 > [!WARNING]
-> Send USDT over BEP20 only. Other networks or tokens may be lost, and please don't send NFTs to this address.
+> USDT는 BEP20으로만 전송하십시오. 다른 네트워크나 토큰은 손실될 수 있습니다. 이 주소로 NFT를 보내지 마십시오.

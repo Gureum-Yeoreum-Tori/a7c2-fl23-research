@@ -1,6 +1,6 @@
 # A7C II Tools 3.0
 
-[English](README.md) · [简体中文](README.zh-CN.md) · **한국어**
+[English](README.en.md) · [简体中文](README.zh-CN.md) · **한국어**
 
 > [!WARNING]
 > ### 사용 전 확인 · 면책 고지
