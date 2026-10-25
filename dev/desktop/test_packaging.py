@@ -83,6 +83,8 @@ def test_windows_output_path_unchanged(tmp_path):
     assert result.name=='A7C2Tools-Windows-x64.zip'
     with zipfile.ZipFile(result) as z:
         assert z.read('A7C2Tools/A7C2Tools.exe')==b'test'
+        assert 'README.en.md' in z.read('A7C2Tools/README.md').decode('utf-8')
+        assert z.read('A7C2Tools/README.en.md') == (ROOT/'README.en.md').read_bytes()
         assert len([n for n in z.namelist() if n.endswith('.dcp')])==18
         assert len([n for n in z.namelist() if n.startswith('A7C2Tools/Profiles/') and n.endswith('.a7look')])==18
         assert not any('diagnostics' in n for n in z.namelist())

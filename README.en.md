@@ -52,7 +52,7 @@ For other models, these independent projects may help. They are not part of this
 > [!IMPORTANT]
 > This tool modifies programs and settings in the camera firmware. Read the whole [step-by-step guide](#step-by-step-guide) before you start. If the app reports an error, **export a diagnostic bundle first. Do not keep retrying the write.**
 
-The interface is in Simplified Chinese. Button names below are given in Chinese with an English translation, so you can match them on screen.
+The development app supports Korean (the default) and Simplified Chinese. Select the interface language at the top of the window and restart the app to apply it. Original diagnostic logs and lower-level error details remain verbatim. Button names below retain Chinese and English for users of existing packages. Published Release packages do not yet include this development-branch change.
 
 ## Contents
 

@@ -2,6 +2,10 @@
 
 [Home](../../README.md) · [简体中文](../zh-CN/changelog.md)
 
+## Korean interface — development branch — 2026-10-25
+
+The desktop app defaults to Korean and retains Simplified Chinese. The language selector saves the choice for the next launch and is disabled while a job runs. Navigation, editor labels, confirmations, reload/connection/format/driver guides and completion messages use an explicit display catalog; user names, paths, action IDs, worker arguments and raw diagnostic logs stay verbatim. Camera planners and transports are unchanged. Offline UI checks cover language persistence, both-language dispatch, confirmation cancellation and standard Qt buttons. Physical camera testing and new release packaging have not been performed. Validation: 121 passed, 1 Windows-only test skipped on Mac; seven Korean pages and three dialogs inspected. The completion unit test mocks macOS elevation as well as the worker, and the Windows driver test explicitly selects its host platform. The package layout includes README.en.md so the Korean home page links to the preserved English text.
+
 ## Standard license update — 2026-10-25
 
 - Use the unmodified public PolyForm Noncommercial License 1.0.0, replacing the previous MIT/Commons Clause combination and custom preamble. README and startup notice prominently state the commercial-use/profit prohibition, separately from the false-authorization heading. Third-party and previous licenses are retained.
